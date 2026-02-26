@@ -11,6 +11,24 @@ After realizing I hadn't booted up my windows machine in about 6 months, I decid
 
 Claude optimistically suggested this setup might take me 90 minutes. It took me about a day, more or less.
 
+## Table of contents
+
+[Requirements](#requirements) · [Questions I anticipate](#questions-i-anticipate) · [Hardware](#hardware)
+
+| Setting up the server | Self-hosting with Coolify | Connecting a domain & networking |
+|---|---|---|
+| [1. BIOS Configuration](#1-bios-configuration) | [5. Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project) | [7. Buy a Domain](#7-buy-a-domain) |
+| [2. Create Bootable USB](#2-create-bootable-usb) | [6. Reserve Static LAN IP](#6-reserve-static-lan-ip) | [8. Cloudflare Tunnel](#8-cloudflare-tunnel) |
+| [3. Install Ubuntu Server](#3-install-ubuntu-server) | | [9. Cloudflare Access (Auth Gate)](#9-cloudflare-access-auth-gate) |
+| [4. SSH In and Mount the 1TB Drive](#4-ssh-in-and-mount-the-1tb-drive) | | |
+
+| Setting up the local LLM | Adding end-to-end encryption | Migrating off Railway |
+|---|---|---|
+| [10. Set up llama.cpp](#10-set-up-llamacpp) | [14. Install Tailscale](#14-install-tailscale) | [15. Migrating a Database from Railway](#15-migrating-a-database-from-railway) |
+| [11. Download a Model](#11-download-a-model) | | |
+| [12. Run llama-server](#12-run-llama-server) | | |
+| [13. Run llama-server as a Persistent Service](#13-run-llama-server-as-a-persistent-service) | | |
+
 ## Requirements
 
 Money I spent:
@@ -38,16 +56,36 @@ AI accounts I used:
 - ChatGPT Pro for open weights model comparison (I find it better for search) ($20/month)
 
 Downloads:
-- [Ubuntu server](https://ubuntu.com/download/server)
+- [Ubuntu Server](https://ubuntu.com/download/server)
+- [Docker](https://get.docker.com)
+- [Coolify](https://coolify.io)
+- [cloudflared](https://pkg.cloudflare.com)
+- [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit) (via `apt`)
+- [llama.cpp](https://github.com/ggerganov/llama.cpp)
+- [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) (via `pip`)
 - [Gemma 2 9B GGUF](https://huggingface.co/bartowski/gemma-2-9b-it-GGUF)
+- [Qwen 2.5 7B GGUF](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF)
+- [Tailscale](https://tailscale.com/download)
 
 ## Questions I anticipate
 
-Is this cheaper than hosting on Railway?
-> It's similar, for my use case. Rough estimates of electricity usage put me at around $10 a month, assuming constant idle. That doesn't factor in LLM inference.
+How does the local LLM compare to ChatGPT or Claude?
+> So far I've been using Gemma 2 9B (4-bit quantized). The intelligence is okay, the speed is slower (about 10 tokens/second), and the context window I'm able to support on this GPU is very small (only about 2k tokens). General "seeking information" type questions work great. I plan to compare many models for this use case.
+
+Why not use Ollama?
+> llama.cpp recently introduced a native web UI that looks super nice, in my opinion. I didn't want to have to set up OpenWebUI. I'm very happy with llama.cpp and it was dead simple to set up.
+
+Is Coolify cheaper than hosting on Railway?
+> It's similar - for my use case at least. Rough estimates of electricity usage put me at around $10 a month, assuming constant idle. That doesn't factor in LLM inference, nor any increased data usage (my ISP has a monthly data cap). I plan to monitor this.
 
 Is Coolify easier to use than Railway?
-> It's taken some getting used to. I think Railway's interface makes it easier to connect up different services, and the way Coolify's proxy works took some getting used to. 
+> No. Self-hosting makes things harder - but more rewarding, depending on your values. Coolify has definitely taken some getting used to, though I think it's more a case of things being moved around in the UI than actually having bad functionality. So far, I think Railway's interface makes it easier to connect up different services, and the way Coolify's proxy works is less intuitive to me.
+
+How loud is the server?
+> I think it's pretty quiet, but it's definitely there. I don't notice a big difference when LLM inference is running - maybe it's around 20% louder. We keep it in the living room by the router so it isn't as bothersome.
+
+What happens when the power/internet goes out?
+> The server breaks, of course. :crying: I turned on restore on AC power loss, so it will restart when the power comes back on, and the internet will reconnect when it comes back on.
 
 ## Hardware
 
