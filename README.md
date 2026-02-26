@@ -74,6 +74,7 @@ Logins needed:
 - Tailscale (if you want end-to-end encryption between devices)
 - Google (or another SSO for Tailscale)
 - Hugging Face (to download models)
+- Squarespace (to purchase a domain name)
 
 AI accounts I used:
 - Claude Max to orchestrate the build & troubleshoot (Claude is my main man) ($100/month)
@@ -94,7 +95,7 @@ Downloads:
 ## Questions I anticipate
 
 How does the local LLM compare to ChatGPT or Claude?
-> So far I've been using Gemma 2 9B (4-bit quantized). The intelligence is okay, the speed is slower (about 10 tokens/second), and the context window I'm able to support on this GPU is very small (only about 2k tokens). General "seeking information" type questions work great. I do find the responses very "safe", not very edgy. There's a lot of "oh I couldn't possibly speculate" type responses. I plan to compare many models for this use case.
+> So far I've been using Gemma 2 9B (4-bit quantized). The intelligence is okay, the speed is slower (about 10 tokens/second), and the context window I'm able to support on this GPU is very small (only about 2k tokens). General "seeking information" type questions work great. I do find the responses very "safe", with a lot of "oh I couldn't possibly speculate" type responses. And you'll get funny old-school LLM responses. For example, when asking how to pronounce `cloudflared`, Gemma helpfully pointed out that "It's pronounced more like Cloudflare-d. Think of it as "Cloudflare" followed by the letter "d", similar to how "Facebook" is pronounced as "Face-book"." Thanks, Gemma! What a helpful analogy. To its credit, that is the correct pronunciation. I plan to compare many models for this use case.
 
 Why not use Ollama?
 > llama.cpp recently introduced a native web UI that looks super nice, in my opinion. I didn't want to have to set up OpenWebUI. I'm very happy with llama.cpp and it was dead simple to set up.
@@ -297,12 +298,19 @@ I ended up paying $20 for a year of `zaro.host`.
 
 I already own `isabelzaro.com`, but I was worried about interrupting email service if records didn't transfer correctly when moving DNS to Cloudflare. I use my email for important stuff, so I thought it best not to introduce potential complications.
 
+After buying the domain, I added it to Cloudflare (I created an account there to do so). Cloudflare walks you through the setup, which involves changing the domain nameservers in your domain name provider (I used Squarespace). It was pretty straightforward.
+
+At this point, I waited overnight for the DNS to propagate.
+
 ## 8. Cloudflare Tunnel
 
-Cloudflare has a generous free plan, and tunnels are highly recommended to expose services to the internet without revealing your home IP or opening router ports. It also helps with DDoS protection (as if my projects are getting any traffic at all, lol). And, as a bonus, it's really easy to add subdomains (like `chat.zaro.host`).
+I want my apps & LLM chat interface to be accessible from anywhere, but, while I don't know much about networking, I do know that exposing your home IP & ports can be dangerous. 
+
+From previous research into homelabbing, I know that Cloudflare tunnels have become popular to address this security issue.
+
+Cloudflare has a generous free plan, and tunnels are highly recommended on my many posts I read for protecting your home network. It also helps with DDoS protection (as if my projects are getting any traffic at all, lol). And, as a bonus, it's really easy to add subdomains (like `chat.zaro.host`).
 
 The "big" downside is that you've now got a man in the middle, and Cloudflare will see your data in plaintext at some point during proxying. It really depends what kind of data you're moving around. For the ultraprivacy of end-to-end encryption, you'll need Tailscale (detailed later in this post).
-
 
 ### Install cloudflared
 
