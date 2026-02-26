@@ -28,7 +28,7 @@ Claude optimistically suggested this setup might take me 90 minutes. It took me 
 
 _To only set up the local LLM, skip this step_
 
-1. [Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project)
+5. [Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project)
 
 **Connecting a domain & networking**
 
