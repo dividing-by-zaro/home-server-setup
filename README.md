@@ -281,11 +281,6 @@ There's a lot of complexity I haven't yet explored with Coolify's ports & proxyi
 
 It is important to know that Coolify's proxy runs on port 80 and routes to app containers by hostname. App containers expose ports internally (e.g., `3000/tcp`) but don't bind to the host.
 
-
-### Coolify networking notes
-
-- **The domain field needs the full URL with scheme**, e.g. `http://through-their-eyes.zaro.host` — not just the hostname
-
 ## 6. Reserve Static LAN IP
 
 To preserve the server's local IP across reboots, I reserved its IP. This was very easy to do in the router's admin page (I was able to just select it from a drop-down).
@@ -299,12 +294,6 @@ This is optional and purely cosmetic, but I like having all my projects hosted t
 I ended up paying $20 for a year of `zaro.host`. 
 
 I already own `isabelzaro.com`, but I was worried about interrupting email service if records didn't transfer correctly when moving DNS to Cloudflare. I use my email for important stuff, so I thought it best not to introduce potential complications.
-
-Any TLD works (`.com`, `.host`, `.company`, etc.). Functional difference is zero — Cloudflare Tunnels, SSL, and DNS work identically. Exotic TLDs cost slightly more (~$15–25/year vs ~$10 for `.com`).
-
-If you already have a domain with a website on it, you can reuse it — put server services on subdomains (e.g., `coolify.yourdomain.com`) and your existing site stays untouched on the root domain.
-
-> **Caution**: If your domain handles email, make sure MX records and SPF/DKIM/DMARC TXT records transfer correctly when moving DNS to Cloudflare. Easiest to just buy a separate domain for the server to avoid this.
 
 ## 8. Cloudflare Tunnel
 
@@ -339,6 +328,8 @@ When adding routes, I set Service type to **HTTP** (not HTTPS) — apparently th
 
 Claude suggested using a wildcard shortcut to Map `*.yourdomain.com` → `http://localhost:80`, which means you only need to touch Cloudflare when adding a non-Coolify service, but I wasn't sure how this would work, so I didn't set it up.
 
+At this point, adding the domain in Coolify worked, and I was able to access my app from my Macbook (you can too, at through-their-eyes.zaro.host!).
+
 ### Route examples
 
 | Subdomain | Service |
@@ -346,6 +337,10 @@ Claude suggested using a wildcard shortcut to Map `*.yourdomain.com` → `http:/
 | `coolify.yourdomain.com` | `http://localhost:8000` |
 | `app.yourdomain.com` | `http://localhost:80` |
 | `chat.yourdomain.com` | `http://localhost:8081` |
+
+### Coolify networking notes
+
+- **The domain field needs the full URL with scheme**, e.g. `http://through-their-eyes.zaro.host` — not just the hostname
 
 ## 9. Cloudflare Access (Auth Gate)
 
