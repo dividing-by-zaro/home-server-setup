@@ -75,7 +75,7 @@ Logins needed:
 
 AI accounts I used:
 - Claude Max to orchestrate the build & troubleshoot (Claude is my main man) ($100/month)
-- ChatGPT Pro for open weights model comparison (I find it better for search) ($20/month)
+- ChatGPT Plus for open weights model comparison (I find it better for search) ($20/month)
 
 Downloads:
 - [Ubuntu Server](https://ubuntu.com/download/server)
@@ -92,7 +92,7 @@ Downloads:
 ## Questions I anticipate
 
 How does the local LLM compare to ChatGPT or Claude?
-> So far I've been using Gemma 2 9B (4-bit quantized). The intelligence is okay, the speed is slower (about 10 tokens/second), and the context window I'm able to support on this GPU is very small (only about 2k tokens). General "seeking information" type questions work great. I plan to compare many models for this use case.
+> So far I've been using Gemma 2 9B (4-bit quantized). The intelligence is okay, the speed is slower (about 10 tokens/second), and the context window I'm able to support on this GPU is very small (only about 2k tokens). General "seeking information" type questions work great. I do find the responses very "safe", not very edgy. There's a lot of "oh I couldn't possibly speculate" type responses. I plan to compare many models for this use case.
 
 Why not use Ollama?
 > llama.cpp recently introduced a native web UI that looks super nice, in my opinion. I didn't want to have to set up OpenWebUI. I'm very happy with llama.cpp and it was dead simple to set up.
@@ -143,13 +143,13 @@ I had hoped to update Wake-on-LAN for remote startup, but couldn't find the sett
 
 Next, I installed the Ubuntu server on the machine. This was probably the hardest step (it took about 6 or 7 tries to get it right).
 
-I had a few false starts here, mostly because this computer's CPU doesn't have integrated graphics, so plugging in my monitor gave an error message that the display resolution wasn't supported.
+I had a few false starts here, mostly because plugging in my monitor into the GPU gave an error message that the display resolution wasn't supported, and plugging into the CPU gave me nothing at all.
 
 A few things I tried:
 
 ### Just SSH into the machine!
 
-Wait, but my PC doesn't have integrated WiFi in the CPU ... 
+Wait, but the Ubuntu Server installer can't use the WiFi adapter without a display to configure it ... 
 
 **Solution:** Run to Ace Hardware to get an ethernet cable (yes, Ace Hardware sells data cables).
 
@@ -544,7 +544,7 @@ sudo systemctl enable tailscaled  # start on boot
 
 Follow the auth link to connect to your Tailscale account.
 
-Tailscale assigns each device a public 100.x.y.z IP.
+Tailscale assigns each device a stable 100.x.y.z IP accessible via devices on your tailnet.
 
 Find your server's Tailscale IP:
 
@@ -614,3 +614,5 @@ This is the point I'm at now, since I want to use Tailscale to end-to-end encryp
 
 - **`Can't load plugin: sqlalchemy.dialects:postgres`** — Change `postgres://` to `postgresql://` in your DATABASE_URL. SQLAlchemy requires the full scheme. For async: `postgresql+asyncpg://`.
 - **`Temporary failure in name resolution`** — Your DATABASE_URL still points at Railway's hostname. Update it to the Coolify Postgres container name (e.g., `postgresql+asyncpg://postgres:PASS@CONTAINER_NAME:5432/mydb`). Containers in the same Coolify project share a Docker network.
+
+(To be continued)
