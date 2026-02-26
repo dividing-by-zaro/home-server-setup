@@ -13,21 +13,42 @@ Claude optimistically suggested this setup might take me 90 minutes. It took me 
 
 ## Table of contents
 
-[Requirements](#requirements) · [Questions I anticipate](#questions-i-anticipate) · [Hardware](#hardware)
+- [Requirements](#requirements)
+- [Questions I anticipate](#questions-i-anticipate)
+- [Hardware](#hardware)
 
-| Setting up the server | Self-hosting with Coolify | Connecting a domain & networking |
-|---|---|---|
-| [1. BIOS Configuration](#1-bios-configuration) | [5. Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project) | [7. Buy a Domain](#7-buy-a-domain) |
-| [2. Create Bootable USB](#2-create-bootable-usb) | [6. Reserve Static LAN IP](#6-reserve-static-lan-ip) | [8. Cloudflare Tunnel](#8-cloudflare-tunnel) |
-| [3. Install Ubuntu Server](#3-install-ubuntu-server) | | [9. Cloudflare Access (Auth Gate)](#9-cloudflare-access-auth-gate) |
-| [4. SSH In and Mount the 1TB Drive](#4-ssh-in-and-mount-the-1tb-drive) | | |
+**Setting up the server**
 
-| Setting up the local LLM | Adding end-to-end encryption | Migrating off Railway |
-|---|---|---|
-| [10. Set up llama.cpp](#10-set-up-llamacpp) | [14. Install Tailscale](#14-install-tailscale) | [15. Migrating a Database from Railway](#15-migrating-a-database-from-railway) |
-| [11. Download a Model](#11-download-a-model) | | |
-| [12. Run llama-server](#12-run-llama-server) | | |
-| [13. Run llama-server as a Persistent Service](#13-run-llama-server-as-a-persistent-service) | | |
+1. [BIOS Configuration](#1-bios-configuration)
+2. [Create Bootable USB](#2-create-bootable-usb)
+3. [Install Ubuntu Server](#3-install-ubuntu-server)
+4. [SSH In and Mount the 1TB Drive](#4-ssh-in-and-mount-the-1tb-drive)
+
+**Self-hosting with Coolify**
+
+5. [Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project)
+6. [Reserve Static LAN IP](#6-reserve-static-lan-ip)
+
+**Connecting a domain & networking**
+
+7. [Buy a Domain](#7-buy-a-domain)
+8. [Cloudflare Tunnel](#8-cloudflare-tunnel)
+9. [Cloudflare Access (Auth Gate)](#9-cloudflare-access-auth-gate)
+
+**Setting up the local LLM**
+
+10. [Set up llama.cpp](#10-set-up-llamacpp)
+11. [Download a Model](#11-download-a-model)
+12. [Run llama-server](#12-run-llama-server)
+13. [Run llama-server as a Persistent Service](#13-run-llama-server-as-a-persistent-service)
+
+**Adding end-to-end encryption**
+
+14. [Install Tailscale](#14-install-tailscale)
+
+**Migrating off Railway**
+
+15. [Migrating a Database from Railway](#15-migrating-a-database-from-railway)
 
 ## Requirements
 
@@ -43,6 +64,7 @@ Materials I used that I already had:
 Time spent:
 - About 6-8 hours actively working (running shell commands, chatting with Claude, running to the hardware store, etc.)
 - About 24 hours in total from when I first booted up my PC (I waited overnight for DNS propagation)
+- A couple of hours to write up this doc
 
 Logins needed:
 - Coolify (for self-hosting)
@@ -89,7 +111,7 @@ What happens when the power/internet goes out?
 
 ## Hardware
 
-I used a prebuilt PC I originally bought from Ironside computers in 2020. It's gotten a fair amount of use but still works great. The main deficiency is the tiny C drive. Of course a bigger GPU might be nice for running bigger models, but even with a 3090, you'll be running ~9B, probably, albeit with better quantization. I'm not sure how big of a difference that makes. Still, a bigger context window would be nice (more on this later).
+I used a prebuilt PC I originally bought from Ironside computers in 2020. It's gotten a fair amount of use but still works great. The main deficiency is the tiny C drive. Of course a bigger GPU might be nice for running bigger models. With a 3090, you could comfortably run 30-36B models, which is a big step up in intelligence. And, the bigger context window would be nice (more on this later).
 
 Specs:
 - **CPU**: Intel Core i5-9400F (6 cores, no integrated graphics — the "F" matters)
