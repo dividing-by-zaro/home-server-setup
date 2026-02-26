@@ -124,8 +124,6 @@ Specs:
 
 Installing Ubuntu server wipes whatever drive you put it on, so I backed everything up to Google Drive before starting. Not the most ideal solution, but I didn't have too many files worth saving. It took about an hour to fully upload.
 
----
-
 ## 1. BIOS Configuration
 
 Before installing Ubuntu server, there were a couple of settings that needed to be changed on the hardware.
@@ -140,8 +138,6 @@ I updated:
 - **Boot order** → UEFI: USB Key first (temporary, for OS installation)
 
 I had hoped to update Wake-on-LAN for remote startup, but couldn't find the setting.
-
----
 
 ## 2. Create Bootable USB
 
@@ -185,8 +181,6 @@ Plug in the USB drive, start up the computer, and wait a few minutes for it to g
 ssh installer@SERVER_IP
 ```
 
----
-
 ## 3. Install Ubuntu Server
 
 With that nightmare over, it was finally time to install the server. These steps are well-documented and straightforward. Installation only took a couple of minutes.
@@ -199,8 +193,6 @@ With that nightmare over, it was finally time to install the server. These steps
 6. Complete installation, reboot, remove USB
 
 DO NOT forget to remove the USB, because you won't realize why you're not able to SSH into the new user you created ... I actually had to go downstairs **again** to do this, smh.
-
----
 
 ## 4. SSH In and Mount the 1TB Drive
 
@@ -234,8 +226,6 @@ echo '/dev/sdb1 /mnt/data ext4 defaults 0 2' | sudo tee -a /etc/fstab
 ```
 
 Verify: `df -h /mnt/data`
-
----
 
 ## 5. Set up Coolify & deploy a project
 
@@ -296,15 +286,11 @@ It is important to know that Coolify's proxy runs on port 80 and routes to app c
 
 - **The domain field needs the full URL with scheme**, e.g. `http://through-their-eyes.zaro.host` — not just the hostname
 
----
-
 ## 6. Reserve Static LAN IP
 
 To preserve the server's local IP across reboots, I reserved its IP. This was very easy to do in the router's admin page (I was able to just select it from a drop-down).
 
 My router brand has an FAQ page about this step: [https://www.tp-link.com/us/support/faq/182/](https://www.tp-link.com/us/support/faq/182/)
-
----
 
 ## 7. Buy a Domain
 
@@ -319,8 +305,6 @@ Any TLD works (`.com`, `.host`, `.company`, etc.). Functional difference is zero
 If you already have a domain with a website on it, you can reuse it — put server services on subdomains (e.g., `coolify.yourdomain.com`) and your existing site stays untouched on the root domain.
 
 > **Caution**: If your domain handles email, make sure MX records and SPF/DKIM/DMARC TXT records transfer correctly when moving DNS to Cloudflare. Easiest to just buy a separate domain for the server to avoid this.
-
----
 
 ## 8. Cloudflare Tunnel
 
@@ -363,8 +347,6 @@ Claude suggested using a wildcard shortcut to Map `*.yourdomain.com` → `http:/
 | `app.yourdomain.com` | `http://localhost:80` |
 | `chat.yourdomain.com` | `http://localhost:8081` |
 
----
-
 ## 9. Cloudflare Access (Auth Gate)
 
 Now that I had an app deployed on my home server, I wanted to set up LLM chat.
@@ -382,8 +364,6 @@ Add this to any subdomain you want protected (Coolify dashboard, LLM web UI, etc
 llama.cpp also has a built in `--api-key` flag. I considered this option, but that would mean building some type of frontend that can accept an api key, and that just seemed like a hassle comparatively.
 
 At this point, you're ready to set up llama.cpp on the server.
-
----
 
 ## 10. Set up llama.cpp
 
@@ -463,8 +443,6 @@ hf download bartowski/Qwen2.5-7B-Instruct-GGUF \
 
 Apparently, you can keep multiple GGUFs on disk and swap by changing the `--model` path.
 
----
-
 ## 12. Run llama-server
 
 This took a couple of goes due to out of memory issues.
@@ -502,8 +480,6 @@ So far, I've been getting about 10 tokens/second when using this model, and the 
 The small context window is definitely a limiter. I might also try the 3-bit quantized version for faster inference.
 
 You really don't realize how demanding these things are to run until you try to fit them on what I'd consider a decent home computer. This is like, a tiny model with like, a tiny context window, and it still doesn't fit on a GPU that runs Elden Ring handily.
-
----
 
 ## 13. Run llama-server as a Persistent Service
 
@@ -544,8 +520,6 @@ sudo systemctl start llama-server
 ```
 
 To swap models, edit the `--model` path in the service file and `sudo systemctl daemon-reload && sudo systemctl restart llama-server`.
-
----
 
 ## 14. Install Tailscale
 
