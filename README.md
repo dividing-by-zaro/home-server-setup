@@ -26,11 +26,13 @@ Claude optimistically suggested this setup might take me 90 minutes. It took me 
 
 **Self-hosting with Coolify**
 
-5. [Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project)
-6. [Reserve Static LAN IP](#6-reserve-static-lan-ip)
+_To only set up the local LLM, skip this step_
+
+1. [Set up Coolify & deploy a project](#5-set-up-coolify--deploy-a-project)
 
 **Connecting a domain & networking**
 
+6. [Reserve Static LAN IP](#6-reserve-static-lan-ip)
 7. [Buy a Domain](#7-buy-a-domain)
 8. [Cloudflare Tunnel](#8-cloudflare-tunnel)
 9. [Cloudflare Access (Auth Gate)](#9-cloudflare-access-auth-gate)
@@ -107,7 +109,7 @@ How loud is the server?
 > I think it's pretty quiet, but it's definitely there. I don't notice a big difference when LLM inference is running - maybe it's around 20% louder. We keep it in the living room by the router so it isn't as bothersome.
 
 What happens when the power/internet goes out?
-> The server breaks, of course. :crying: I turned on restore on AC power loss, so it will restart when the power comes back on, and the internet will reconnect when it comes back on.
+> The server breaks, of course. :crying: I turned on restore on AC power loss, so it will restart when the power comes back on. The server will always reconnect to the internet as well.
 
 ## Hardware
 
