@@ -59,7 +59,7 @@ Money I spent:
 Materials I used that I already had:
 - The PC I used for this build cost $1145 in 2020
 - A 500gb USB drive of my wife's (8gb would have been just fine)
-- Home internet (we pay $50/month for 50 Mbps up/down - yet to be determined how this fares)
+- Home internet (we pay $50/month for 50 Mbps)
 
 Time spent:
 - About 6-8 hours actively working (running shell commands, chatting with Claude, running to the hardware store, etc.)
@@ -518,7 +518,7 @@ To swap models, edit the `--model` path in the service file and `sudo systemctl 
 
 ## 14. Install Tailscale
 
-As I mentioned earlier, the Cloudflare + llama.cpp setup isn't technically private. While Cloudflare has a good reputation for data privacy, and states they don't store or view your data (aside from logging anonymized metrics) - it's the same trust model as something like Vercel or Railway.
+As I mentioned earlier, the Cloudflare + llama.cpp setup isn't technically private. While Cloudflare has a good reputation for data privacy, and states they don't store or view your data (aside from logging anonymized metrics), you're basically trusting the system. I'd say that's better than uploading your life straight to Chat "Ads are coming to AI" GPT, but ultimately, trust is trust. Why not have zero trust when you can?
 
 For actual privacy, I wanted an end-to-end encrypted connection so that no intermediary can read the traffic.
 
